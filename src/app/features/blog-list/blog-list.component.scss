@@ -1,20 +1,4 @@
-// Variables - HomeSpace official colors
-$background-color: #ffffff;
-$default-color: #263a31;
-$heading-color: #103524;
-$accent-color: #077f46;
-$surface-color: #ffffff;
-$contrast-color: #ffffff;
-
-// Additional colors for UI elements
-$text-muted: rgba(38, 58, 49, 0.6);
-$border: rgba(38, 58, 49, 0.1);
-$border-light: rgba(38, 58, 49, 0.05);
-$shadow: rgba(38, 58, 49, 0.08);
-$shadow-accent: rgba(7, 127, 70, 0.15);
-$surface-hover: #f8f9fa;
-$radius: 10px;
-$transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+@import '../../../variables';
 
 // Mixins
 @mixin card-shadow {
