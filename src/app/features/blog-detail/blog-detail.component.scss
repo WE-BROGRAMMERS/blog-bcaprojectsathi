@@ -1,0 +1,822 @@
+@import '../../../variables';
+
+
+.blog-detail-container {
+  min-height: 100vh;
+  background: $background-color;
+  color: $default-color;
+}
+
+.blog-article {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.article-header {
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid $border;
+}
+
+.header-content {
+  max-width: 800px;
+}
+
+.breadcrumb {
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+}
+
+.breadcrumb-link {
+  color: $accent-color;
+  text-decoration: none;
+  transition: $transition;
+}
+
+.breadcrumb-link:hover {
+  color: darken($accent-color, 10%);
+}
+
+.breadcrumb-separator {
+  margin: 0 0.75rem;
+  color: $text-muted;
+}
+
+.breadcrumb-current {
+  color: $text-muted;
+}
+
+.article-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.tag {
+  background: $accent-color;
+  color: $contrast-color;
+  padding: 0.375rem 0.875rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.article-title {
+  font-size: 3rem;
+  font-weight: 800;
+  line-height: 1.2;
+  margin: 0 0 1rem;
+  color: $heading-color;
+  text-align: center;
+}
+
+.article-excerpt {
+  font-size: 1.25rem;
+  line-height: 1.6;
+  color: $text-muted;
+  margin: 0 0 2rem;
+  text-align: justify;
+  font-style: italic;
+}
+
+.article-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  background: $surface-color;
+  border-radius: $radius;
+  border: 1px solid $border-light;
+  box-shadow: 0 2px 8px $shadow;
+}
+
+.author-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.author-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid $accent-color;
+}
+
+.author-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.author-name {
+  font-weight: 600;
+  color: $heading-color;
+}
+
+.author-title {
+  font-size: 0.9rem;
+  color: $text-muted;
+}
+
+.article-stats {
+  display: flex;
+  gap: 2rem;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color: $text-muted;
+  margin-bottom: 0.25rem;
+}
+
+.stat-value {
+  font-weight: 600;
+  color: $default-color;
+}
+
+.article-body {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+
+.table-of-contents {
+  position: sticky;
+  top: 2rem;
+  background: $surface-color;
+  border-radius: $radius;
+  padding: 1.5rem;
+  border: 1px solid $border-light;
+  height: fit-content;
+  box-shadow: 0 2px 8px $shadow;
+}
+
+.table-of-contents h3 {
+  margin: 0 0 1rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: $heading-color;
+}
+
+.toc-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.toc-item {
+  margin-bottom: 0.5rem;
+}
+
+.toc-link {
+  display: block;
+  padding: 0.5rem 0.75rem;
+  color: $text-muted;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  transition: $transition;
+  border-left: 3px solid transparent;
+}
+
+.toc-link:hover,
+.toc-item.active .toc-link {
+  color: $accent-color;
+  background: rgba($accent-color, 0.05);
+  border-left-color: $accent-color;
+}
+
+.toc-link.level-1 {
+  font-weight: 600;
+}
+
+.toc-link.level-2 {
+  padding-left: 1.5rem;
+}
+
+.toc-link.level-3 {
+  padding-left: 2.25rem;
+  font-size: 0.85rem;
+}
+
+// IEEE Standard Article Content Styles
+.article-content {
+  background: $surface-color;
+  border-radius: $radius;
+  padding: 3rem;
+  border: 1px solid $border-light;
+  line-height: 1.8; // IEEE standard line height
+  font-family: 'Times New Roman', Times, serif; // Academic font
+  font-size: 12pt; // IEEE standard font size
+  text-align: justify; // IEEE standard text alignment
+  box-shadow: 0 2px 8px $shadow;
+
+  // IEEE Standard Headings
+  ::ng-deep h1,
+  ::ng-deep h2,
+  ::ng-deep h3,
+  ::ng-deep h4,
+  ::ng-deep h5,
+  ::ng-deep h6 {
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    font-weight: bold;
+    color: $heading-color;
+    text-align: left;
+    margin-top: 24pt;
+    margin-bottom: 12pt;
+    scroll-margin-top: 2rem;
+    line-height: 1.2;
+  }
+
+  ::ng-deep h1 {
+    font-size: 16pt;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 2px solid $border;
+    padding-bottom: 8pt;
+    text-align: center;
+    margin-top: 36pt;
+    margin-bottom: 18pt;
+  }
+
+  ::ng-deep h2 {
+    font-size: 14pt;
+    margin-top: 24pt;
+    margin-bottom: 12pt;
+  }
+
+  ::ng-deep h3 {
+    font-size: 12pt;
+    font-style: italic;
+    margin-top: 18pt;
+    margin-bottom: 9pt;
+  }
+
+  ::ng-deep h4 {
+    font-size: 11pt;
+    margin-top: 12pt;
+    margin-bottom: 6pt;
+  }
+
+  ::ng-deep h5,
+  ::ng-deep h6 {
+    font-size: 10pt;
+    margin-top: 12pt;
+    margin-bottom: 6pt;
+  }
+
+  // IEEE Standard Paragraphs
+  ::ng-deep p {
+    margin: 12pt 0;
+    color: $default-color;
+    text-indent: 0.5in; // IEEE standard paragraph indent
+    text-align: justify;
+    orphans: 2;
+    widows: 2;
+  }
+
+  ::ng-deep p:first-of-type {
+    text-indent: 0; // First paragraph after heading not indented
+  }
+
+  // IEEE Standard Lists
+  ::ng-deep ul,
+  ::ng-deep ol {
+    margin: 12pt 0;
+    padding-left: 0.5in;
+    text-align: left;
+  }
+
+  ::ng-deep ul {
+    list-style-type: disc;
+  }
+
+  ::ng-deep ol {
+    list-style-type: decimal;
+  }
+
+  ::ng-deep li {
+    margin: 6pt 0;
+    color: $default-color;
+    line-height: 1.6;
+    text-align: justify;
+  }
+
+  ::ng-deep li::marker {
+    color: $accent-color;
+    font-weight: bold;
+  }
+
+  // Nested lists
+  ::ng-deep ul ul,
+  ::ng-deep ol ol,
+  ::ng-deep ul ol,
+  ::ng-deep ol ul {
+    margin: 6pt 0;
+    padding-left: 0.25in;
+  }
+
+  ::ng-deep ul ul {
+    list-style-type: circle;
+  }
+
+  ::ng-deep ul ul ul {
+    list-style-type: square;
+  }
+
+  // IEEE Standard Tables
+  ::ng-deep table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 18pt auto;
+    background: $surface-color;
+    border-radius: 0;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    font-size: 10pt;
+    border: 1px solid $border;
+    box-shadow: 0 2px 8px $shadow;
+  }
+
+  ::ng-deep table caption {
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 6pt;
+    color: $heading-color;
+    font-size: 10pt;
+  }
+
+  ::ng-deep table th {
+    background: darken($surface-color, 5%);
+    color: $heading-color;
+    font-weight: bold;
+    text-align: center;
+    padding: 8pt 12pt;
+    border: 1px solid $border;
+    vertical-align: middle;
+  }
+
+  ::ng-deep table td {
+    padding: 8pt 12pt;
+    border: 1px solid $border;
+    text-align: left;
+    vertical-align: top;
+    color: $default-color;
+  }
+
+  ::ng-deep table tr:nth-child(even) {
+    background: $surface-hover;
+  }
+
+  ::ng-deep table tr:hover {
+    background: rgba($accent-color, 0.05);
+  }
+
+  // IEEE Standard Figures and Images
+  ::ng-deep img,
+  ::ng-deep figure {
+    display: block;
+    margin: 18pt auto;
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px $shadow;
+  }
+
+  ::ng-deep figure {
+    text-align: center;
+  }
+
+  ::ng-deep figcaption {
+    font-size: 10pt;
+    color: $text-muted;
+    text-align: center;
+    margin-top: 6pt;
+    font-style: italic;
+    font-weight: bold;
+  }
+
+  // IEEE Standard Code Blocks
+  ::ng-deep code {
+    background: darken($surface-color, 3%);
+    color: $accent-color;
+    padding: 2pt 4pt;
+    border-radius: 2px;
+    font-family: 'Courier New', 'Monaco', 'Menlo', monospace;
+    font-size: 9pt;
+    border: 1px solid $border-light;
+  }
+
+  ::ng-deep pre {
+    background: darken($surface-color, 2%);
+    color: $default-color;
+    padding: 12pt;
+    border-radius: 4px;
+    overflow-x: auto;
+    margin: 18pt 0;
+    border: 1px solid $border;
+    font-family: 'Courier New', 'Monaco', 'Menlo', monospace;
+    font-size: 9pt;
+    line-height: 1.4;
+    white-space: pre;
+    box-shadow: 0 2px 8px $shadow;
+  }
+
+  ::ng-deep pre code {
+    background: transparent;
+    color: inherit;
+    padding: 0;
+    border: none;
+    font-size: inherit;
+  }
+
+  // IEEE Standard Blockquotes
+  ::ng-deep blockquote {
+    margin: 18pt 0.5in;
+    padding: 12pt 18pt;
+    background: rgba($accent-color, 0.03);
+    border-left: 4px solid $accent-color;
+    border-radius: 0 4px 4px 0;
+    font-style: italic;
+    position: relative;
+    box-shadow: 0 2px 8px $shadow;
+  }
+
+  ::ng-deep blockquote p {
+    margin: 6pt 0;
+    color: $default-color;
+    text-indent: 0;
+    line-height: 1.6;
+  }
+
+  ::ng-deep blockquote::before {
+    content: '"';
+    font-size: 48pt;
+    color: rgba($accent-color, 0.2);
+    position: absolute;
+    top: -6pt;
+    left: 12pt;
+    font-family: Georgia, serif;
+    line-height: 1;
+  }
+
+  ::ng-deep blockquote cite {
+    display: block;
+    text-align: right;
+    margin-top: 12pt;
+    font-size: 10pt;
+    color: $text-muted;
+    font-style: normal;
+  }
+
+  ::ng-deep blockquote cite::before {
+    content: '— ';
+  }
+
+  // IEEE Standard Horizontal Rules
+  ::ng-deep hr {
+    border: none;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, $border, transparent);
+    margin: 24pt 0;
+  }
+
+  // IEEE Standard Text Formatting
+  ::ng-deep strong,
+  ::ng-deep b {
+    color: $heading-color;
+    font-weight: bold;
+  }
+
+  ::ng-deep em,
+  ::ng-deep i {
+    color: $default-color;
+    font-style: italic;
+  }
+
+  ::ng-deep u {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  ::ng-deep s,
+  ::ng-deep del {
+    text-decoration: line-through;
+    color: $text-muted;
+  }
+
+  ::ng-deep mark {
+    background: rgba($accent-color, 0.15);
+    color: $heading-color;
+    padding: 1pt 2pt;
+    border-radius: 2px;
+  }
+
+  ::ng-deep sub,
+  ::ng-deep sup {
+    font-size: 0.8em;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+  }
+
+  ::ng-deep sup {
+    top: -0.5em;
+  }
+
+  ::ng-deep sub {
+    bottom: -0.25em;
+  }
+
+  // IEEE Standard Links
+  ::ng-deep a {
+    color: $accent-color;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    transition: $transition;
+  }
+
+  ::ng-deep a:hover {
+    color: darken($accent-color, 10%);
+    text-decoration: none;
+  }
+
+  ::ng-deep a:visited {
+    color: darken($accent-color, 20%);
+  }
+
+  // IEEE Standard Definition Lists
+  ::ng-deep dl {
+    margin: 12pt 0;
+  }
+
+  ::ng-deep dt {
+    font-weight: bold;
+    color: $heading-color;
+    margin-top: 12pt;
+    margin-bottom: 3pt;
+  }
+
+  ::ng-deep dd {
+    margin-left: 0.5in;
+    margin-bottom: 6pt;
+    color: $default-color;
+  }
+
+  // CKEditor Specific Elements
+  ::ng-deep .ck-content {
+    font-family: inherit !important;
+    font-size: inherit !important;
+    line-height: inherit !important;
+  }
+
+  // Math Equations (if using MathJax or similar)
+  ::ng-deep .math-tex {
+    font-family: 'Times New Roman', serif;
+    font-size: 12pt;
+    color: $heading-color;
+    margin: 12pt 0;
+    text-align: center;
+  }
+
+  // Footnotes
+  ::ng-deep .footnote {
+    font-size: 9pt;
+    color: $text-muted;
+    vertical-align: super;
+    text-decoration: none;
+  }
+
+  ::ng-deep .footnote:hover {
+    color: $accent-color;
+  }
+
+  // Special IEEE Elements
+  ::ng-deep .abstract {
+    background: rgba($accent-color, 0.03);
+    padding: 18pt;
+    margin: 24pt 0;
+    border-radius: 4px;
+    border: 1px solid rgba($accent-color, 0.1);
+    font-style: italic;
+    box-shadow: 0 2px 8px $shadow;
+  }
+
+  ::ng-deep .abstract::before {
+    content: 'Abstract—';
+    font-weight: bold;
+    font-style: normal;
+    color: $heading-color;
+  }
+
+  ::ng-deep .keywords {
+    margin: 12pt 0;
+    font-style: italic;
+  }
+
+  ::ng-deep .keywords::before {
+    content: 'Index Terms—';
+    font-weight: bold;
+    font-style: normal;
+    color: $heading-color;
+  }
+}
+
+.article-footer {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid $border;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.article-tags-footer h4 {
+  margin: 0 0 0.75rem;
+  color: $heading-color;
+  font-size: 1rem;
+}
+
+.tags-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tag-footer {
+  background: $surface-hover;
+  color: $default-color;
+  padding: 0.375rem 0.875rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  border: 1px solid $border-light;
+}
+
+.back-link {
+  color: $accent-color;
+  text-decoration: none;
+  font-weight: 500;
+  transition: $transition;
+}
+
+.back-link:hover {
+  color: darken($accent-color, 10%);
+}
+
+.not-found {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: $background-color;
+  color: $default-color;
+  text-align: center;
+  padding: 2rem;
+}
+
+.not-found h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: $heading-color;
+}
+
+.not-found p {
+  font-size: 1.25rem;
+  color: $text-muted;
+  margin-bottom: 2rem;
+}
+
+// Print Styles for IEEE Standard
+@media print {
+  .blog-detail-container {
+    background: white !important;
+    color: black !important;
+  }
+
+  .article-content {
+    background: white !important;
+    color: black !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  .article-content ::ng-deep * {
+    color: black !important;
+    background: white !important;
+  }
+
+  .table-of-contents {
+    display: none;
+  }
+
+  .article-body {
+    grid-template-columns: 1fr;
+  }
+
+  .article-content ::ng-deep pre,
+  .article-content ::ng-deep code {
+    background: #f5f5f5 !important;
+    color: black !important;
+    border: 1px solid #ccc !important;
+  }
+}
+
+// Responsive Design
+@media (max-width: 1024px) {
+  .article-body {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .table-of-contents {
+    position: static;
+    order: -1;
+  }
+
+  .article-content {
+    padding: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .blog-article {
+    padding: 1rem;
+  }
+
+  .article-title {
+    font-size: 2rem;
+  }
+
+  .article-meta {
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: stretch;
+  }
+
+  .article-stats {
+    justify-content: space-around;
+  }
+
+  .article-content {
+    padding: 1.5rem;
+    font-size: 11pt;
+  }
+
+  .footer-content {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .table-of-contents {
+    padding: 1rem;
+  }
+
+  // Mobile text adjustments
+  .article-content ::ng-deep p {
+    text-indent: 0.25in;
+  }
+
+  .article-content ::ng-deep ul,
+  .article-content ::ng-deep ol {
+    padding-left: 0.25in;
+  }
+}
+
+@media (max-width: 480px) {
+  .article-content {
+    padding: 1rem;
+    font-size: 10pt;
+  }
+
+  .article-content ::ng-deep p {
+    text-indent: 0;
+  }
+
+  .article-content ::ng-deep table {
+    font-size: 8pt;
+  }
+
+  .article-content ::ng-deep table th,
+  .article-content ::ng-deep table td {
+    padding: 4pt 6pt;
+  }
+}
