@@ -5,6 +5,7 @@ import {Observable} from "rxjs";
 import {BlogPost} from "../../core/models/blog.model";
 import {BlogService} from "../../core/services/blog.service";
 import { format } from 'date-fns';
+import {Meta, Title} from "@angular/platform-browser";
 
 
 @Component({
@@ -22,10 +23,22 @@ import { format } from 'date-fns';
 export class BlogListComponent implements OnInit {
   posts$!: Observable<BlogPost[]>;
 
-  constructor(private blogService: BlogService) {}
+  constructor(
+    private blogService: BlogService,
+    private meta: Meta,
+    private title: Title
+  ) {}
+
+  setMeta() {
+    this.title.setTitle('BCA Project Sathi Blog');
+    this.meta.updateTag({ name: 'description', content: 'Explore our blog for insights, updates, and stories from the BCA Project Sathi community.' });
+    this.meta.updateTag({ property: 'og:title', content: 'BCA Project Sathi Blog' });
+    this.meta.updateTag({ property: 'og:description', content: 'Explore our blog for insights, updates, and stories from the BCA Project Sathi community.' });
+  }
 
   ngOnInit() {
     this.posts$ = this.blogService.getAllPosts();
+    this.setMeta();
   }
 
   formatDate(date: Date): string {

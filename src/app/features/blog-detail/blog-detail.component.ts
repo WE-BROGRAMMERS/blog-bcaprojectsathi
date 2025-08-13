@@ -7,6 +7,7 @@ import {BlogService} from "../../core/services/blog.service";
 import { Clipboard } from '@angular/cdk/clipboard';
 import {format} from "date-fns";
 import {MarkdownComponent} from "ngx-markdown";
+import {Meta, Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-blog-detail',
@@ -30,8 +31,17 @@ export class BlogDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private blogService: BlogService,
     private clipboard: Clipboard,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private meta: Meta,
+    private title: Title
   ) {}
+
+  setMeta(post: BlogPost) {
+    this.title.setTitle(post.title + ' | BCA Project Sathi Blog');
+    this.meta.updateTag({ name: 'description', content: post.excerpt });
+    this.meta.updateTag({ property: 'og:title', content: post.title });
+    this.meta.updateTag({ property: 'og:description', content: post.excerpt });
+  }
 
   ngOnInit() {
     this.post$ = this.route.paramMap.pipe(
@@ -42,8 +52,10 @@ export class BlogDetailComponent implements OnInit {
     this.post$.subscribe(post => {
       if (post) {
         setTimeout(() => this.generateTableOfContents(), 100);
+        this.setMeta(post);
       }
     });
+
   }
 
   formatDate(date: Date): string {
