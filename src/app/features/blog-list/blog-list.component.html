@@ -1,0 +1,59 @@
+<div class="blog-list-container">
+  <div class="hero-section">
+    <div class="hero-content">
+      <img src="https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop&crop=face" alt="Utsab Dahal" class="profile-image">
+      <div class="hero-text">
+        <h1 class="hero-title">BCA Project Sathi</h1>
+        <p class="hero-subtitle">Your go to resource for BCA projects</p>
+        <p class="hero-description">
+          Sharing insights on modern web development, programming best practices, and the latest in tech innovation.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="blog-content">
+    <div class="section-header">
+      <h2>Latest Articles</h2>
+      <p>Discover the latest insights and tutorials</p>
+    </div>
+
+    <div class="posts-grid" *ngIf="posts$ | async as posts">
+      <article
+        class="post-card"
+        *ngFor="let post of posts"
+        [routerLink]="['/blog', post.slug]"
+      >
+        <div class="post-thumbnail">
+          <img [src]="post.thumbnail" [alt]="post.title" loading="lazy">
+          <div class="post-overlay">
+            <span class="read-more">Read Article</span>
+          </div>
+        </div>
+
+        <div class="post-content">
+          <div class="post-tags">
+                <span class="tag" *ngFor="let tag of post.tags.slice(0, 3)">
+                  {{ tag }}
+                </span>
+          </div>
+
+          <h3 class="post-title">{{ post.title }}</h3>
+          <p class="post-excerpt">{{ post.excerpt }}</p>
+
+          <div class="post-meta">
+            <div class="author-info">
+              <img src="https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&w=32&h=32&fit=crop&crop=face" alt="Author" class="author-avatar">
+              <span class="author-name">{{ post.author }}</span>
+            </div>
+
+            <div class="post-stats">
+              <span class="post-date">{{ formatDate(post.publishedDate) }}</span>
+              <span class="reading-time">{{ post.readingTime }} min read</span>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</div>
