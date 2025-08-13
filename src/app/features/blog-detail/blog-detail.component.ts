@@ -8,6 +8,7 @@ import { Clipboard } from '@angular/cdk/clipboard';
 import {format} from "date-fns";
 import {MarkdownComponent} from "ngx-markdown";
 import {Meta, Title} from "@angular/platform-browser";
+import Prism from 'prismjs';
 
 @Component({
   selector: 'app-blog-detail',
@@ -94,6 +95,7 @@ export class BlogDetailComponent implements OnInit {
   }
 
   enhanceCodeBlocks() {
+    if (!isPlatformBrowser(this.platformId)) return;
     const codeBlocks = document.querySelectorAll('.article-content pre code');
 
     codeBlocks.forEach((codeBlock, index) => {
@@ -273,6 +275,7 @@ export class BlogDetailComponent implements OnInit {
       wrapper.appendChild(header);
       wrapper.appendChild(pre);
     });
+    Prism.highlightAll();
   }
 
   setupScrollSpy() {
