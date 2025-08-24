@@ -19,9 +19,13 @@
 
         <div class="article-meta">
           <div class="author-info">
-            <img src="https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&w=48&h=48&fit=crop&crop=face" alt="Author" class="author-avatar">
+            <img
+              [src]="post.author.avatar || fallbackImage"
+              (error)="onImgError($event)"
+              alt="Author"
+              class="author-avatar">
             <div class="author-details">
-              <span class="author-name">{{ post.author }}</span>
+              <span class="author-name">{{ post.author.name }}</span>
               <span class="author-title">Full-Stack Developer</span>
             </div>
           </div>
