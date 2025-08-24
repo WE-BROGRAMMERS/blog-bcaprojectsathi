@@ -33,6 +33,9 @@ function mapBlogPost(data: any): BlogPost {
     thumbnail: data.thumbnail,
     tags: data.tags,
     slug: data.slug,
+    seoTitle: data.seo_title,
+    seoDescription: data.seo_description,
+    seoKeywords: data.seo_keywords,
   };
 }
 
@@ -63,7 +66,7 @@ export class BlogService {
       supabase
         .from('blog_posts')
         .select(`
-          id, title, excerpt, content, published_date, reading_time, thumbnail, tags, slug,
+          id, title, excerpt, content, published_date, reading_time, thumbnail, tags, slug, seo_title, seo_description, seo_keywords,
           author:profiles (
             id, name, avatar, bio, website, twitter, linkedin, github
           )

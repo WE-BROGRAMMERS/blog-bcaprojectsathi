@@ -38,10 +38,37 @@ export class BlogDetailComponent implements OnInit {
   ) {}
 
   setMeta(post: BlogPost) {
-    this.title.setTitle(post.title + ' | BCA Project Sathi Blog');
-    this.meta.updateTag({ name: 'description', content: post.excerpt });
-    this.meta.updateTag({ property: 'og:title', content: post.title });
-    this.meta.updateTag({ property: 'og:description', content: post.excerpt });
+    const title = post.seoTitle || post.title;
+    const description = post.seoDescription || post.excerpt;
+    const keywords = post.seoKeywords?.join(', ') || '';
+    const url = window.location.href;
+    const image = post.thumbnail;
+
+    this.title.setTitle(`${title} | BCA Project Sathi Blog`);
+    this.meta.updateTag({ name: 'description', content: description });
+    this.meta.updateTag({ name: 'keywords', content: keywords });
+
+    // Open Graph tags
+    this.meta.updateTag({ property: 'og:title', content: title });
+    this.meta.updateTag({ property: 'og:description', content: description });
+    this.meta.updateTag({ property: 'og:type', content: 'article' });
+    this.meta.updateTag({ property: 'og:url', content: url });
+    this.meta.updateTag({ property: 'og:image', content: image });
+
+    // Twitter Card tags
+    this.meta.updateTag({ name: 'twitter:card', content: 'summary_large_image' });
+    this.meta.updateTag({ name: 'twitter:title', content: title });
+    this.meta.updateTag({ name: 'twitter:description', content: description });
+    this.meta.updateTag({ name: 'twitter:image', content: image });
+
+    // Canonical link (optional, if you want to set it dynamically)
+    let link: HTMLLinkElement | null = document.querySelector("link[rel='canonical']");
+    if (!link) {
+      link = document.createElement('link');
+      link.setAttribute('rel', 'canonical');
+      document.head.appendChild(link);
+    }
+    link.setAttribute('href', url);
   }
 
   ngOnInit() {
@@ -98,7 +125,7 @@ export class BlogDetailComponent implements OnInit {
     if (!isPlatformBrowser(this.platformId)) return;
     const codeBlocks = document.querySelectorAll('.article-content pre code');
 
-    codeBlocks.forEach((codeBlock, index) => {
+    codeBlocks.forEach((codeBlock, _index) => {
       const pre = codeBlock.parentElement as HTMLPreElement;
       if (!pre) return;
 

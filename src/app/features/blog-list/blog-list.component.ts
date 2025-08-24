@@ -30,10 +30,36 @@ export class BlogListComponent implements OnInit {
   ) {}
 
   setMeta() {
-    this.title.setTitle('BCA Project Sathi Blog');
-    this.meta.updateTag({ name: 'description', content: 'Explore our blog for insights, updates, and stories from the BCA Project Sathi community.' });
-    this.meta.updateTag({ property: 'og:title', content: 'BCA Project Sathi Blog' });
-    this.meta.updateTag({ property: 'og:description', content: 'Explore our blog for insights, updates, and stories from the BCA Project Sathi community.' });
+    const title = 'BCA Project Sathi Blog';
+    const description = 'Explore our blog for insights, updates, and stories from the BCA Project Sathi community.';
+    const url = window.location.href;
+    const image = 'https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&w=600';
+
+    this.title.setTitle(title);
+    this.meta.updateTag({ name: 'description', content: description });
+    this.meta.updateTag({ name: 'keywords', content: 'BCA, blog, projects, web development, programming, tech' });
+
+    // Open Graph tags
+    this.meta.updateTag({ property: 'og:title', content: title });
+    this.meta.updateTag({ property: 'og:description', content: description });
+    this.meta.updateTag({ property: 'og:type', content: 'website' });
+    this.meta.updateTag({ property: 'og:url', content: url });
+    this.meta.updateTag({ property: 'og:image', content: image });
+
+    // Twitter Card tags
+    this.meta.updateTag({ name: 'twitter:card', content: 'summary_large_image' });
+    this.meta.updateTag({ name: 'twitter:title', content: title });
+    this.meta.updateTag({ name: 'twitter:description', content: description });
+    this.meta.updateTag({ name: 'twitter:image', content: image });
+
+    // Canonical link
+    let link: HTMLLinkElement | null = document.querySelector("link[rel='canonical']");
+    if (!link) {
+      link = document.createElement('link');
+      link.setAttribute('rel', 'canonical');
+      document.head.appendChild(link);
+    }
+    link.setAttribute('href', url);
   }
 
   ngOnInit() {
@@ -45,7 +71,6 @@ export class BlogListComponent implements OnInit {
     return format(date, 'MMM dd, yyyy');
   }
 
-  protected readonly HTMLImageElement = HTMLImageElement;
 
   fallbackImage: string =
     'https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&w=32&h=32&fit=crop&crop=face';
