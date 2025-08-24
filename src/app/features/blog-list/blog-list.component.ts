@@ -44,4 +44,15 @@ export class BlogListComponent implements OnInit {
   formatDate(date: Date): string {
     return format(date, 'MMM dd, yyyy');
   }
+
+  protected readonly HTMLImageElement = HTMLImageElement;
+
+  fallbackImage: string =
+    'https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&w=32&h=32&fit=crop&crop=face';
+
+  onImgError(event: Event) {
+    const img = event.target as HTMLImageElement;
+    img.src = this.fallbackImage;
+  }
+
 }

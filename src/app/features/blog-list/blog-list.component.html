@@ -43,9 +43,14 @@
 
           <div class="post-meta">
             <div class="author-info">
-              <img src="https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&w=32&h=32&fit=crop&crop=face" alt="Author" class="author-avatar">
-              <span class="author-name">{{ post.author }}</span>
-            </div>
+              <img
+                [src]="post.author.avatar || fallbackImage"
+                (error)="onImgError($event)"
+                alt="Author"
+                class="author-avatar"
+              />
+
+              <span class="author-name">{{ post.author.name }}</span></div>
 
             <div class="post-stats">
               <span class="post-date">{{ formatDate(post.publishedDate) }}</span>
