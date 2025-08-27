@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
+import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
+import {AsyncPipe, isPlatformBrowser, NgForOf, NgIf} from "@angular/common";
 import {RouterLink} from "@angular/router";
 import {Observable} from "rxjs";
 import {BlogPost} from "../../core/models/blog.model";
@@ -26,15 +26,17 @@ export class BlogListComponent implements OnInit {
   constructor(
     private blogService: BlogService,
     private meta: Meta,
-    private title: Title
+    private title: Title,
+    @Inject(PLATFORM_ID) private platformId: Object,
+
   ) {}
 
   setMeta() {
-    if(!window) return;
+    if (!isPlatformBrowser(this.platformId)) return;
     const title = 'BCA Project Sathi Blog';
     const description = 'Explore our blog for insights, updates, and stories from the BCA Project Sathi community.';
     const url = window.location.href;
-    const image = 'https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&w=600';
+    const image = window.location.origin + '/assets/images/bcaprojectsathi-banner.png';
 
     this.title.setTitle(title);
     this.meta.updateTag({ name: 'description', content: description });

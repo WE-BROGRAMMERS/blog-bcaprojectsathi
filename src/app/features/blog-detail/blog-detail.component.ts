@@ -11,7 +11,6 @@ import {MarkdownComponent} from "ngx-markdown";
 import {Meta, Title} from "@angular/platform-browser";
 import Prism from 'prismjs';
 
-// Import additional Prism languages
 import 'prismjs/components/prism-typescript';
 import 'prismjs/components/prism-javascript';
 import 'prismjs/components/prism-css';
