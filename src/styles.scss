@@ -9,3 +9,13 @@
   padding: 0;
   box-sizing: border-box;
 }
+.prose table {
+  @apply w-full border-collapse;
+}
+
+.prose table {
+  display: block;
+  overflow-x: auto;
+  max-width: 100%;
+  white-space: nowrap; /* prevent text from wrapping awkwardly */
+}
