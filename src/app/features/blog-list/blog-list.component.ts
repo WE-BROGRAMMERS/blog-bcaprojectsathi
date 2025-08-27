@@ -30,6 +30,7 @@ export class BlogListComponent implements OnInit {
   ) {}
 
   setMeta() {
+    if(!window) return;
     const title = 'BCA Project Sathi Blog';
     const description = 'Explore our blog for insights, updates, and stories from the BCA Project Sathi community.';
     const url = window.location.href;
