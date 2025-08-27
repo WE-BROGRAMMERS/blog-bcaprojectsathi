@@ -9,6 +9,9 @@ export interface BlogPost {
   thumbnail: string;
   tags: string[];
   slug: string;
+  seoTitle?: string;
+  seoDescription?: string;
+  seoKeywords?: string[];
 }
 
 export interface AuthorProfile {
