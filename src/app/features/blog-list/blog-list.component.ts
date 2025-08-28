@@ -1,12 +1,13 @@
 import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
 import {AsyncPipe, isPlatformBrowser, NgForOf, NgIf, NgOptimizedImage} from "@angular/common";
 import {RouterLink} from "@angular/router";
-import {Observable} from "rxjs";
+import {Observable, tap} from "rxjs";
 import {BlogPost} from "../../core/models/blog.model";
 import {BlogService} from "../../core/services/blog.service";
 import { format } from 'date-fns';
 import {Meta, Title} from "@angular/platform-browser";
 import { trigger, transition, style, animate, query, stagger } from '@angular/animations';
+import {BlogListSkeletonComponent} from "../../skeleton/blog-list-skeleton/blog-list-skeleton.component";
 
 @Component({
   selector: 'app-blog-list',
@@ -16,7 +17,8 @@ import { trigger, transition, style, animate, query, stagger } from '@angular/an
     NgForOf,
     RouterLink,
     AsyncPipe,
-    NgOptimizedImage
+    NgOptimizedImage,
+    BlogListSkeletonComponent
   ],
   templateUrl: './blog-list.component.html',
   styleUrl: './blog-list.component.scss',
@@ -67,6 +69,7 @@ import { trigger, transition, style, animate, query, stagger } from '@angular/an
 })
 export class BlogListComponent implements OnInit {
   posts$!: Observable<BlogPost[]>;
+  isLoading: boolean = true;
 
   constructor(
     private blogService: BlogService,
@@ -110,8 +113,9 @@ export class BlogListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.posts$ = this.blogService.getAllPosts();
-    this.setMeta();
+    this.posts$ = this.blogService.getAllPosts().pipe(
+      tap(() => this.isLoading = false)
+    );    this.setMeta();
   }
 
   formatDate(date: Date): string {

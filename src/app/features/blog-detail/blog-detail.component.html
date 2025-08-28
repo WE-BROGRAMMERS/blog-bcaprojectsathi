@@ -1,3 +1,6 @@
+<app-blog-detail-skeleton *ngIf="isLoading"></app-blog-detail-skeleton>
+
+
 <div class="min-h-screen bg-white" *ngIf="post$ | async as post">
   <!-- Hero Section -->
   <div class="relative overflow-hidden bg-gradient-to-br from-green-50 to-emerald-50">
