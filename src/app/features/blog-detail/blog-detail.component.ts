@@ -1,7 +1,7 @@
 import {Component, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
 import {ActivatedRoute, RouterLink} from "@angular/router";
 import {AsyncPipe, isPlatformBrowser, NgForOf, NgIf} from "@angular/common";
-import {map, Observable, of, Subject, switchMap} from "rxjs";
+import {map, Observable, of, Subject, switchMap, tap} from "rxjs";
 import {takeUntil} from "rxjs/operators";
 import {BlogPost, TableOfContentsItem} from "../../core/models/blog.model";
 import {BlogService} from "../../core/services/blog.service";
@@ -23,6 +23,7 @@ import 'prismjs/components/prism-csharp';
 import 'prismjs/components/prism-sql';
 import 'prismjs/components/prism-yaml';
 import 'prismjs/components/prism-markdown';
+import {BlogDetailSkeletonComponent} from "../../skeleton/blog-detail-skeleton/blog-detail-skeleton.component";
 
 @Component({
   selector: 'app-blog-detail',
@@ -32,7 +33,8 @@ import 'prismjs/components/prism-markdown';
     AsyncPipe,
     NgForOf,
     NgIf,
-    MarkdownComponent
+    MarkdownComponent,
+    BlogDetailSkeletonComponent,
   ],
   templateUrl: './blog-detail.component.html',
   styleUrl: './blog-detail.component.scss'
@@ -44,6 +46,7 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
   isMobileTOCOpen: boolean = false;
   private destroy$ = new Subject<void>();
   private intersectionObserver?: IntersectionObserver;
+  isLoading = true;
 
   constructor(
     private route: ActivatedRoute,
@@ -93,6 +96,7 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
     this.post$ = this.route.paramMap.pipe(
       map(params => params.get('slug')),
       switchMap(slug => slug ? this.blogService.getPostBySlug(slug) : of(undefined)),
+      tap(() => this.isLoading = false), // Set loading to false when data arrives
       takeUntil(this.destroy$)
     );
 
@@ -354,9 +358,7 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
     }
   }
 
-  fallbackImage: string =
-    'https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&w=32&h=32&fit=crop&crop=face';
-
+  fallbackImage: string = '/images/blog-fallback.png';
   onImgError(event: Event) {
     if (!isPlatformBrowser(this.platformId)) return;
 

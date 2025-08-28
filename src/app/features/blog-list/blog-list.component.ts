@@ -1,12 +1,13 @@
 import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
-import {AsyncPipe, isPlatformBrowser, NgForOf, NgIf} from "@angular/common";
+import {AsyncPipe, isPlatformBrowser, NgForOf, NgIf, NgOptimizedImage} from "@angular/common";
 import {RouterLink} from "@angular/router";
-import {Observable} from "rxjs";
+import {Observable, tap} from "rxjs";
 import {BlogPost} from "../../core/models/blog.model";
 import {BlogService} from "../../core/services/blog.service";
 import { format } from 'date-fns';
 import {Meta, Title} from "@angular/platform-browser";
-
+import { trigger, transition, style, animate, query, stagger } from '@angular/animations';
+import {BlogListSkeletonComponent} from "../../skeleton/blog-list-skeleton/blog-list-skeleton.component";
 
 @Component({
   selector: 'app-blog-list',
@@ -15,20 +16,66 @@ import {Meta, Title} from "@angular/platform-browser";
     NgIf,
     NgForOf,
     RouterLink,
-    AsyncPipe
+    AsyncPipe,
+    NgOptimizedImage,
+    BlogListSkeletonComponent
   ],
   templateUrl: './blog-list.component.html',
-  styleUrl: './blog-list.component.scss'
+  styleUrl: './blog-list.component.scss',
+  animations: [
+    trigger('fadeInUp', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'translateY(30px)' }),
+        animate('600ms cubic-bezier(0.35, 0, 0.25, 1)',
+          style({ opacity: 1, transform: 'translateY(0)' })
+        )
+      ])
+    ]),
+    trigger('staggerIn', [
+      transition('* => *', [
+        query(':enter', [
+          style({ opacity: 0, transform: 'translateY(50px) scale(0.95)' }),
+          stagger(100, [
+            animate('700ms cubic-bezier(0.35, 0, 0.25, 1)',
+              style({ opacity: 1, transform: 'translateY(0) scale(1)' })
+            )
+          ])
+        ], { optional: true })
+      ])
+    ]),
+    trigger('heroAnimation', [
+      transition(':enter', [
+        query('.profile-image', [
+          style({ opacity: 0, transform: 'scale(0.8) rotate(-5deg)' })
+        ]),
+        query('.hero-text > *', [
+          style({ opacity: 0, transform: 'translateY(20px)' })
+        ]),
+        query('.profile-image', [
+          animate('800ms 200ms cubic-bezier(0.35, 0, 0.25, 1)',
+            style({ opacity: 1, transform: 'scale(1) rotate(0deg)' })
+          )
+        ]),
+        query('.hero-text > *', [
+          stagger(150, [
+            animate('600ms 400ms cubic-bezier(0.35, 0, 0.25, 1)',
+              style({ opacity: 1, transform: 'translateY(0)' })
+            )
+          ])
+        ])
+      ])
+    ])
+  ]
 })
 export class BlogListComponent implements OnInit {
   posts$!: Observable<BlogPost[]>;
+  isLoading: boolean = true;
 
   constructor(
     private blogService: BlogService,
     private meta: Meta,
     private title: Title,
     @Inject(PLATFORM_ID) private platformId: Object,
-
   ) {}
 
   setMeta() {
@@ -66,21 +113,18 @@ export class BlogListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.posts$ = this.blogService.getAllPosts();
-    this.setMeta();
+    this.posts$ = this.blogService.getAllPosts().pipe(
+      tap(() => this.isLoading = false)
+    );    this.setMeta();
   }
 
   formatDate(date: Date): string {
     return format(date, 'MMM dd, yyyy');
   }
 
-
-  fallbackImage: string =
-    'https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&w=32&h=32&fit=crop&crop=face';
-
+  fallbackImage: string = '/images/bcaprojectsathi-banner.png';
   onImgError(event: Event) {
     const img = event.target as HTMLImageElement;
     img.src = this.fallbackImage;
   }
-
 }

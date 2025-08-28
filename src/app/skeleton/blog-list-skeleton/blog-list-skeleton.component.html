@@ -1,0 +1,86 @@
+<div class="min-h-screen bg-gradient-to-br from-slate-50 via-white to-green-50">
+  <!-- Hero Section Skeleton -->
+  <section class="hero-section relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-r from-green-600/5 to-emerald-600/5"></div>
+    <div class="absolute top-0 right-0 w-72 h-72 bg-gradient-to-br from-green-400/10 to-emerald-500/10 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-emerald-400/10 to-green-500/10 rounded-full blur-3xl"></div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24">
+      <div class="hero-content flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
+        <div class="profile-image-container relative">
+          <div class="w-32 h-32 sm:w-40 sm:h-40 lg:w-48 lg:h-48 skeleton rounded-full shadow-2xl ring-4 ring-white/20 backdrop-blur-sm"></div>
+          <div class="absolute inset-0 rounded-full bg-gradient-to-tr from-green-400/20 to-emerald-500/20 animate-pulse"></div>
+        </div>
+
+        <div class="hero-text text-center lg:text-left flex-1 space-y-4">
+          <div class="space-y-2">
+            <div class="h-12 sm:h-14 lg:h-16 skeleton rounded w-full max-w-md mx-auto lg:mx-0"></div>
+            <div class="h-12 sm:h-14 lg:h-16 skeleton rounded w-3/4 max-w-xs mx-auto lg:mx-0"></div>
+          </div>
+          <div class="h-6 sm:h-7 skeleton rounded w-2/3 max-w-sm mx-auto lg:mx-0"></div>
+          <div class="space-y-2 max-w-2xl mx-auto lg:mx-0">
+            <div class="h-5 skeleton rounded w-full"></div>
+            <div class="h-5 skeleton rounded w-4/5"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Blog Content Skeleton -->
+  <section class="blog-content py-16 sm:py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Section Header Skeleton -->
+      <div class="section-header text-center mb-12 sm:mb-16">
+        <div class="h-10 sm:h-12 lg:h-14 skeleton rounded w-64 mx-auto mb-4"></div>
+        <div class="h-5 sm:h-6 skeleton rounded w-80 max-w-2xl mx-auto mb-6"></div>
+        <div class="w-24 h-1 bg-gray-200 rounded-full mx-auto animate-pulse"></div>
+      </div>
+
+      <!-- Posts Grid Skeleton -->
+      <div class="posts-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+        <div class="post-skeleton" *ngFor="let item of skeletonItems">
+          <div class="bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100/50">
+            <!-- Image skeleton -->
+            <div class="w-full h-48 sm:h-56 lg:h-48 skeleton"></div>
+
+            <!-- Content skeleton -->
+            <div class="p-6 space-y-4">
+              <!-- Tags skeleton -->
+              <div class="flex gap-2">
+                <div class="w-16 h-6 skeleton rounded-full"></div>
+                <div class="w-20 h-6 skeleton rounded-full"></div>
+                <div class="w-14 h-6 skeleton rounded-full"></div>
+              </div>
+
+              <!-- Title skeleton -->
+              <div class="space-y-2">
+                <div class="h-6 skeleton rounded w-full"></div>
+                <div class="h-6 skeleton rounded w-3/4"></div>
+              </div>
+
+              <!-- Excerpt skeleton -->
+              <div class="space-y-2">
+                <div class="h-4 skeleton rounded w-full"></div>
+                <div class="h-4 skeleton rounded w-5/6"></div>
+                <div class="h-4 skeleton rounded w-4/5"></div>
+              </div>
+
+              <!-- Meta skeleton -->
+              <div class="flex justify-between items-center pt-2">
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 skeleton rounded-full"></div>
+                  <div class="w-20 h-4 skeleton rounded"></div>
+                </div>
+                <div class="flex items-center gap-4">
+                  <div class="w-16 h-4 skeleton rounded"></div>
+                  <div class="w-14 h-4 skeleton rounded"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
