@@ -4,11 +4,10 @@ import {AsyncPipe, isPlatformBrowser, NgForOf, NgIf} from "@angular/common";
 import {map, Observable, of, Subject, switchMap, tap} from "rxjs";
 import {takeUntil} from "rxjs/operators";
 import {BlogPost, TableOfContentsItem} from "../../core/models/blog.model";
-import {BlogService} from "../../core/services/blog.service";
+import {BlogService} from "../../core/services/blog/blog.service";
 import {Clipboard} from '@angular/cdk/clipboard';
 import {format} from "date-fns";
 import {MarkdownComponent} from "ngx-markdown";
-import {Meta, Title} from "@angular/platform-browser";
 import Prism from 'prismjs';
 
 import 'prismjs/components/prism-typescript';
@@ -24,6 +23,7 @@ import 'prismjs/components/prism-sql';
 import 'prismjs/components/prism-yaml';
 import 'prismjs/components/prism-markdown';
 import {BlogDetailSkeletonComponent} from "../../skeleton/blog-detail-skeleton/blog-detail-skeleton.component";
+import {SeoService} from "../../core/services/seo/seo.service";
 
 @Component({
   selector: 'app-blog-detail',
@@ -53,43 +53,18 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
     private blogService: BlogService,
     private clipboard: Clipboard,
     @Inject(PLATFORM_ID) private platformId: Object,
-    private meta: Meta,
-    private title: Title
+    private seo: SeoService
   ) {}
 
   setMeta(post: BlogPost) {
-    if(!isPlatformBrowser(this.platformId)) return;
-    const title = post.seoTitle || post.title;
-    const description = post.seoDescription || post.excerpt;
-    const keywords = post.seoKeywords?.join(', ') || '';
-    const url = window.location.href;
-    const image = post.thumbnail;
-
-    this.title.setTitle(`${title} | BCA Project Sathi Blog`);
-    this.meta.updateTag({ name: 'description', content: description });
-    this.meta.updateTag({ name: 'keywords', content: keywords });
-
-    // Open Graph tags
-    this.meta.updateTag({ property: 'og:title', content: title });
-    this.meta.updateTag({ property: 'og:description', content: description });
-    this.meta.updateTag({ property: 'og:type', content: 'article' });
-    this.meta.updateTag({ property: 'og:url', content: url });
-    this.meta.updateTag({ property: 'og:image', content: image });
-
-    // Twitter Card tags
-    this.meta.updateTag({ name: 'twitter:card', content: 'summary_large_image' });
-    this.meta.updateTag({ name: 'twitter:title', content: title });
-    this.meta.updateTag({ name: 'twitter:description', content: description });
-    this.meta.updateTag({ name: 'twitter:image', content: image });
-
-    // Canonical link
-    let link: HTMLLinkElement | null = document.querySelector("link[rel='canonical']");
-    if (!link) {
-      link = document.createElement('link');
-      link.setAttribute('rel', 'canonical');
-      document.head.appendChild(link);
-    }
-    link.setAttribute('href', url);
+    this.seo.updateMeta({
+      title: `${post.seoTitle || post.title} | BCA Project Sathi Blog`,
+      description: post.seoDescription || post.excerpt,
+      keywords: post.seoKeywords?.join(', '),
+      url: isPlatformBrowser(this.platformId) ? window.location.href : '',
+      image: post.thumbnail,
+      type: 'article'
+    });
   }
 
   ngOnInit() {
@@ -100,8 +75,10 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
       takeUntil(this.destroy$)
     );
 
+
     this.post$.subscribe(post => {
       if (post) {
+        console.log('Post loaded:', post);
         setTimeout(() => this.generateTableOfContents(), 100);
         this.setMeta(post);
       }
