@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { BlogPost, AuthorProfile } from '../models/blog.model';
+import { BlogPost, AuthorProfile } from '../../models/blog.model';
 import { Observable, from } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { createClient } from '@supabase/supabase-js';
-import { environment } from '../../../environments/environment';
+import { environment } from '../../../../environments/environment';
 
 const supabase = createClient(environment.supabaseUrl, environment.supabaseKey);
 

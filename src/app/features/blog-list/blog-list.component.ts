@@ -3,11 +3,11 @@ import {AsyncPipe, isPlatformBrowser, NgForOf, NgIf, NgOptimizedImage} from "@an
 import {RouterLink} from "@angular/router";
 import {Observable, tap} from "rxjs";
 import {BlogPost} from "../../core/models/blog.model";
-import {BlogService} from "../../core/services/blog.service";
+import {BlogService} from "../../core/services/blog/blog.service";
 import { format } from 'date-fns';
-import {Meta, Title} from "@angular/platform-browser";
 import { trigger, transition, style, animate, query, stagger } from '@angular/animations';
 import {BlogListSkeletonComponent} from "../../skeleton/blog-list-skeleton/blog-list-skeleton.component";
+import {SeoService} from "../../core/services/seo/seo.service";
 
 @Component({
   selector: 'app-blog-list',
@@ -73,43 +73,19 @@ export class BlogListComponent implements OnInit {
 
   constructor(
     private blogService: BlogService,
-    private meta: Meta,
-    private title: Title,
+    private seo: SeoService,
     @Inject(PLATFORM_ID) private platformId: Object,
   ) {}
 
   setMeta() {
-    if (!isPlatformBrowser(this.platformId)) return;
-    const title = 'BCA Project Sathi Blog';
-    const description = 'Explore our blog for insights, updates, and stories from the BCA Project Sathi community.';
-    const url = window.location.href;
-    const image = window.location.origin + '/assets/images/bcaprojectsathi-banner.png';
-
-    this.title.setTitle(title);
-    this.meta.updateTag({ name: 'description', content: description });
-    this.meta.updateTag({ name: 'keywords', content: 'BCA, blog, projects, web development, programming, tech' });
-
-    // Open Graph tags
-    this.meta.updateTag({ property: 'og:title', content: title });
-    this.meta.updateTag({ property: 'og:description', content: description });
-    this.meta.updateTag({ property: 'og:type', content: 'website' });
-    this.meta.updateTag({ property: 'og:url', content: url });
-    this.meta.updateTag({ property: 'og:image', content: image });
-
-    // Twitter Card tags
-    this.meta.updateTag({ name: 'twitter:card', content: 'summary_large_image' });
-    this.meta.updateTag({ name: 'twitter:title', content: title });
-    this.meta.updateTag({ name: 'twitter:description', content: description });
-    this.meta.updateTag({ name: 'twitter:image', content: image });
-
-    // Canonical link
-    let link: HTMLLinkElement | null = document.querySelector("link[rel='canonical']");
-    if (!link) {
-      link = document.createElement('link');
-      link.setAttribute('rel', 'canonical');
-      document.head.appendChild(link);
-    }
-    link.setAttribute('href', url);
+    this.seo.updateMeta({
+      title: 'BCA Project Sathi Blog',
+      description: 'Explore our blog for insights, updates, and stories from the BCA Project Sathi community.',
+      keywords: 'BCA, blog, projects, web development, programming, tech',
+      url: isPlatformBrowser(this.platformId) ? window.location.href : '',
+      image: isPlatformBrowser(this.platformId) ? window.location.origin + '/assets/images/bcaprojectsathi-banner.png' : '',
+      type: 'website'
+    });
   }
 
   ngOnInit() {
