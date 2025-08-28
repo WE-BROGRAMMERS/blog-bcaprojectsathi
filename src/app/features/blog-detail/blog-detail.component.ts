@@ -1,6 +1,6 @@
 import {Component, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
 import {ActivatedRoute, RouterLink} from "@angular/router";
-import {AsyncPipe, isPlatformBrowser, NgForOf, NgIf} from "@angular/common";
+import {AsyncPipe, DatePipe, isPlatformBrowser, NgForOf, NgIf} from "@angular/common";
 import {map, Observable, of, Subject, switchMap, tap} from "rxjs";
 import {takeUntil} from "rxjs/operators";
 import {BlogPost, TableOfContentsItem} from "../../core/models/blog.model";
@@ -35,6 +35,7 @@ import {SeoService} from "../../core/services/seo/seo.service";
     NgIf,
     MarkdownComponent,
     BlogDetailSkeletonComponent,
+    DatePipe,
   ],
   templateUrl: './blog-detail.component.html',
   styleUrl: './blog-detail.component.scss'
@@ -83,6 +84,16 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
         this.setMeta(post);
       }
     });
+  }
+
+  showAuthorModal = false;
+
+  openAuthorModal() {
+    this.showAuthorModal = true;
+  }
+
+  closeAuthorModal() {
+    this.showAuthorModal = false;
   }
 
   ngOnDestroy() {

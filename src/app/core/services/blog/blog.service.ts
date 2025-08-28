@@ -68,7 +68,7 @@ export class BlogService {
         .select(`
           id, title, excerpt, content, published_date, reading_time, thumbnail, tags, slug, seo_title, seo_description, seo_keywords,
           author:profiles (
-            id, name, avatar, bio, website, twitter, linkedin, github
+            id, name, avatar, bio, website, twitter, linkedin, github, created_at
           )
         `)
         .eq('slug', slug)
