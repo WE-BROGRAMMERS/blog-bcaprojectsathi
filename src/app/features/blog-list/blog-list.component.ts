@@ -98,6 +98,15 @@ export class BlogListComponent implements OnInit {
     return format(date, 'MMM dd, yyyy');
   }
 
+  getOptimizedImage(url: string, width: number = 600, height: number = 192): string {
+    return `https://res.cloudinary.com/dpr74fre2/image/fetch/f_auto,q_auto,c_fill,w_${width},h_${height}/${url}`;
+  }
+
+  getBlurredImage(url: string): string {
+    return `https://res.cloudinary.com/dpr74fre2/image/fetch/e_blur:200,q_1,w_20/${url}`;
+  }
+
+
   fallbackImage: string = '/images/bcaprojectsathi-banner.png';
   onImgError(event: Event) {
     const img = event.target as HTMLImageElement;
