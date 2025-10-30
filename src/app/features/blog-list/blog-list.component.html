@@ -70,14 +70,16 @@
               aria-hidden="true"
               class="absolute inset-0 w-full h-full object-cover blur-lg scale-110"
               fill>
+            <!-- src/app/features/blog-list/blog-list.component.html -->
+
             <img
-              ngSrc="{{ getOptimizedImage(post.thumbnail, 600, 192) }}"
+              ngSrc="{{ getOptimizedImage(post.thumbnail, 2240, 1260) }}"
               [alt]="post.title"
-              width="600"
-              height="192"
+              width="2240"
+              height="1260"
               loading="lazy"
               class="relative w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-            >
+            />
 
             <div
               class="post-overlay absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
